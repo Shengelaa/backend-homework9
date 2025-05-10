@@ -32,4 +32,24 @@ program
     await fs.writeFile("todo.json", JSON.stringify(data));
   });
 
+program
+  .command("delete")
+  .argument("<id>")
+  .action(async (id) => {
+    console.log(id);
+    const data = await readFile("todo.json", true);
+
+    const filteredProducts = data.filter((data) => data.id !== Number(id));
+
+    await fs.writeFile("todo.json", JSON.stringify(filteredProducts));
+  });
+
+program
+  .command("remake")
+  .argument("<id>")
+  .argument("<name>")
+  .action(async (id, name) => {
+    const data = await readFile("phone.json", true);
+  });
+
 program.parse();
