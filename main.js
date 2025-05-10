@@ -67,4 +67,29 @@ program.command("show").action(async () => {
   console.log(data);
 });
 
+//2) Create a weather API CLI tool that:
+//Takes a city name as input.
+///Fetches and displays the exact temperature in Celsius using this API endpoint:
+///https://api.openweathermap.org/data/2.5/weather?q={cityName}&units=metric&appid=895284fb2d2c50a520ea537456963d9c
+
+program
+  .command("showWeather")
+  .argument("<cityName>")
+  .action((cityName) => {
+    console.log(cityName);
+
+    fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=895284fb2d2c50a520ea537456963d9c`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        const temp = data.main.temp;
+
+        const minTemp = data.main.temp_min;
+        const maxTemp = data.main.temp_max;
+        console.log(`In ${cityName} the temperature is ${temp}`);
+        console.log(`Min Temperature is ${minTemp} and Max is ${maxTemp}`);
+      });
+  });
+
 program.parse();
