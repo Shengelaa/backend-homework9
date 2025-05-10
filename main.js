@@ -39,9 +39,9 @@ program
     console.log(id);
     const data = await readFile("todo.json", true);
 
-    const filteredProducts = data.filter((data) => data.id !== Number(id));
+    const filteredTodo = data.filter((data) => data.id !== Number(id));
 
-    await fs.writeFile("todo.json", JSON.stringify(filteredProducts));
+    await fs.writeFile("todo.json", JSON.stringify(filteredTodo));
   });
 
 program
@@ -49,7 +49,16 @@ program
   .argument("<id>")
   .argument("<name>")
   .action(async (id, name) => {
-    const data = await readFile("phone.json", true);
+    const data = await readFile("todo.json", true);
+    const filteredTodo = data.filter((data) => data.id === Number(id));
+    console.log(filteredTodo);
+
+    const newTodo = {
+      id: Number(id),
+      newName: name,
+    };
+
+    console.log(newTodo);
   });
 
 program.parse();
