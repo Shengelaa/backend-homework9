@@ -50,15 +50,21 @@ program
   .argument("<name>")
   .action(async (id, name) => {
     const data = await readFile("todo.json", true);
-    const filteredTodo = data.filter((data) => data.id === Number(id));
-    console.log(filteredTodo);
+    const filteredTodo = data.filter((data) => data.id !== Number(id));
 
     const newTodo = {
       id: Number(id),
       newName: name,
     };
 
-    console.log(newTodo);
+    filteredTodo.push(newTodo);
+
+    await fs.writeFile("todo.json", JSON.stringify(filteredTodo));
   });
+
+program.command("show").action(async () => {
+  const data = await readFile("todo.json", true);
+  console.log(data);
+});
 
 program.parse();
